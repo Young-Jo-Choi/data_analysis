@@ -1,0 +1,10 @@
+https://ehmatthes.github.io/pcc/solutions/README.html   나의 첫 파이썬 연습문제 정답 사이트
+https://kenial.tistory.com/902   PEP8 스타일 가이드 번역문
+클래스 스타일 -p247
+http://pymotw.com/  파이썬 표준 라이브러리(이번주의 파이썬 모듈)
+http://gutenberg.org/  구텐베르크 프로젝트(고전 문학 공개사이트)
+https://pixabay.com/  저작권에 걸리지 않는 이미지 찾기
+http://matplotlib.org/  맷플롯 갤러리. 시각화 샘플들에 대한 코드를 찾아볼 수 있음
+https://matplotlib.org/  pyplot에 쓸 수 있는 컬러맵 볼 수 있음
+http://www.pygal.org/en/stable/  파이갤 갤러리
+https://www.wunderground.com/history/ 날씨 데이터
