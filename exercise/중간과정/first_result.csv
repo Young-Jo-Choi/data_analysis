@@ -1,0 +1,187 @@
+순위,국가,1인당_GDP,영문
+1,룩셈부르크,"113,196",Luxembourg
+2,스위스,"83,717",Switzerland
+3,노르웨이,"77,975",Norway
+4,아일랜드,"77,771",Ireland
+5,카타르,"69,688",Qatar
+6,아이슬란드,"67,037",Iceland
+7,미국,"65,112",United States of America
+8,싱가포르,"63,987",Singapore
+9,덴마크,"59,795",Denmark
+10,오스트레일리아,"53,825",Australia
+11,네덜란드,"52,368",Netherlands
+12,스웨덴,"51,242",Sweden
+13,오스트리아,"50,023",Austria
+14,핀란드,"48,869",Finland
+15,산마리노,"47,280",San Marino
+16,독일,"46,564",Germany
+17,캐나다,"46,213",Canada
+18,벨기에,"45,176",Belgium
+19,이스라엘,"42,823",Israel
+20,프랑스,"41,761",France
+21,영국,"41,030",United Kingdom
+22,일본,"40,847",Japan
+23,뉴질랜드,"40,634",New Zealand
+24,아랍에미리트,"37,750",United Arab Emirates
+25,바하마,"33,261",Bahamas
+26,이탈리아,"32,947",Italy
+27,대한민국,"31,431",Republic of Korea
+28,몰타,"30,650",Malta
+29,스페인,"29,961",Spain
+30,쿠웨이트,"29,267",Kuwait
+31,브루나이,"27,871",Brunei Darussalam
+32,키프로스,"27,720",Cyprus
+33,슬로베니아,"26,170",Slovenia
+34,바레인,"25,273",Bahrain
+36,에스토니아,"23,524",Estonia
+37,체코,"23,214",Czech Republic
+38,포르투갈,"23,031",Portugal
+39,사우디아라비아,"22,865",Saudi Arabia
+40,그리스,"19,974",Greece
+41,슬로바키아,"19,548",Slovakia
+42,리투아니아,"19,267",Lithuania
+43,세인트키츠 네비스,"18,246",Saint Kitts and Nevis
+44,라트비아,"18,172",Latvia
+45,앤티가 바부다,"18,109",Antigua and Barbuda
+46,바베이도스,"18,069",Barbados
+47,오만,"17,791",Oman
+48,헝가리,"17,463",Hungary
+49,세이셸,"17,052",Seychelles
+50,우루과이,"17,029",Uruguay
+51,팔라우,"16,736",Palau
+52,트리니다드 토바고,"16,366",Trinidad and Tobago
+53,파나마,"16,245",Panama
+54,몰디브,"15,563",Maldives
+55,칠레,"15,399",Chile
+56,크로아티아,"14,950",Croatia
+57,폴란드,"14,902",Poland
+58,루마니아,"12,483",Romania
+59,코스타리카,"12,015",Costa Rica
+60,그레나다,"11,381",Grenada
+61,모리셔스,"11,361",Mauritius
+62,러시아,"11,163",Russia
+63,말레이시아,"11,137",Malaysia
+64,세인트루시아,"11,076",Saint Lucia
+65,멕시코,"10,118",Mexico
+66,중화인민공화국,"10,099",China
+67,아르헨티나,"9,888",Argentina
+68,레바논,"9,655",Lebanon
+69,불가리아,"9,518",Bulgaria
+70,카자흐스탄,"9,139",Kazakhstan
+71,터키,"8,958",Turkey
+72,적도 기니,"8,927",Equatorial Guinea
+73,브라질,"8,797",Brazil
+74,몬테네그로,"8,704",Montenegro
+75,도미니카 공화국,"8,629",Dominican Republic
+76,도미니카 연방,"8,381",Commonwealth of Dominica
+77,나우루,"8,270",Nauru
+78,가봉,"8,112",Gabon
+79,보츠와나,"7,859",Botswana
+80,투르크메니스탄,"7,816",Turkmenistan
+81,태국,"7,792",Thailand
+82,세인트빈센트 그레나딘,"7,751",Saint Vincent and the Grenadines
+83,세르비아,"7,398",Serbia
+84,페루,"7,047",Peru
+85,벨라루스,"6,604",Belarus
+86,콜롬비아,"6,508",Colombia
+87,피지,"6,380",Fiji
+88,수리남,"6,311",Republic of Suriname
+89,에콰도르,"6,249",Ecuador
+90,남아프리카 공화국,"6,100",Republic of South Africa
+91,북마케도니아,"6,096",Macedonia
+92,나미비아,"5,842",Namibia
+93,보스니아 헤르체고비나,"5,742",Bosnia and Herzegovina
+94,이라크,"5,738",Iraq
+95,파라과이,"5,692",Paraguay
+96,이란,"5,506",Iran
+97,자메이카,"5,461",Jamaica
+98,알바니아,"5,373",Albania
+99,가이아나,"5,252",Guyana
+100,리비아,"5,020",Libya
+101,벨리즈,"4,925",Belize
+102,통가,"4,862",Tonga
+103,아제르바이잔,"4,689",Azerbaijan
+104,과테말라,"4,617",Guatemala
+105,아르메니아,"4,528",Armenia
+106,사모아,"4,501",Samoa
+108,요르단,"4,387",Jordan
+109,조지아,"4,289",Georgia
+110,에스와티니,"4,177",Kingdom of Eswatini
+111,인도네시아,"4,164",Indonesia
+112,몽골,"4,133",Mongolia
+113,엘살바도르,"4,008",El Salvador
+114,알제리,"3,980",Algeria
+115,스리랑카,"3,947",Sri Lanka
+116,마셜 제도,"3,925",Marshall Is.
+117,투발루,"3,835",Tuvalu
+118,미크로네시아 연방,"3,718",Micronesia
+119,볼리비아,"3,671",Bolivia
+120,카보베르데,"3,599",Cape Verde
+121,우크라이나,"3,592",Ukraine
+122,부탄,"3,423",Bhutan
+123,모로코,"3,345",Morocco
+124,몰도바,"3,300",Moldova
+125,필리핀,"3,294",Philippines
+126,튀니지,"3,287",Tunisia
+127,바누아투,"3,260",Vanuatu
+128,이집트,"3,047",Egypt
+129,앙골라,"3,038",Angola
+130,지부티,"2,936",Djibouti
+131,파푸아뉴기니,"2,742",Papua New Guinea
+132,베트남,"2,740",Vietnam
+133,라오스,"2,670",Laos
+134,베네수엘라,"2,548",Bolivarian Republic of Venezuela
+134,온두라스,"2,548",Honduras
+136,콩고 공화국,"2,534",Republic of the Congo
+137,동티모르,"2,263",East Timor
+138,솔로몬 제도,"2,247",Solomon Is.
+139,가나,"2,223",Ghana
+140,나이지리아,"2,222",Nigeria
+141,인도,"2,172",India
+142,케냐,"1,998",Kenya
+143,상투메 프린시페,"1,933",Sao Tome and Principe
+144,니카라과,"1,919",Nicaragua
+145,방글라데시,"1,906",Bangladesh
+146,우즈베키스탄,"1,832",Uzbekistan
+147,코트디부아르,"1,691",Republic of Cote d'Ivoire
+148,캄보디아,"1,621",Cambodia
+149,키리바시,"1,575",Kiribati
+150,카메룬,"1,515",Cameroon
+151,세네갈,"1,428",Senegal
+152,모리타니,"1,392",Mauritania
+153,파키스탄,"1,388",Pakistan
+154,코모로,"1,350",Comoros
+155,레소토,"1,339",Lesotho
+156,잠비아,"1,307",Zambia
+157,키르기스스탄,"1,293",Kyrgyzstan
+158,미얀마,"1,245",Republic of the Union of Myanmar
+159,베냉,"1,217",Benin
+160,탄자니아,"1,105",Tanzania
+161,네팔,"1,048",Nepal
+162,기니,981,Guinea
+163,에티오피아,953,Ethiopia
+164,예멘,943,Yemen
+165,말리,924,Mali
+166,타지키스탄,877,Tajikistan
+167,차드,861,Chad
+168,짐바브웨,860,Zimbabwe
+169,르완다,825,Rwanda
+170,기니비사우,786,Guinea Bissau
+171,아이티,784,Haiti
+172,우간다,770,Uganda
+173,감비아,755,Republic of The Gambia
+174,부르키나파소,718,Burkina Faso
+175,수단,714,Sudan
+176,라이베리아,704,Liberia
+177,토고,671,Togo
+178,시에라리온,547,Sierra Leone
+179,아프가니스탄,513,Afghanistan
+180,콩고 민주 공화국,501,Democratic Republic of the Congo
+181,모잠비크,484,Mozambique
+182,마다가스카르,464,Madagascar
+183,중앙아프리카 공화국,448,Central African Republic
+184,니제르,405,Niger
+185,말라위,371,Malawi
+186,에리트레아,343,Eritrea
+187,부룬디,310,Burundi
+188,남수단,275,Republic of South Sudan
