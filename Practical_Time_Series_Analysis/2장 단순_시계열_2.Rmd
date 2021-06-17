@@ -1,0 +1,226 @@
+---
+title: "2장 시계열 데이터"
+output: html_notebook
+---
+
+# 데이터 정리
+- 누락된 데이터(결측 데이터)
+- 시계열 빈도 변경(업샘플링, 다운샘플링)
+- 데이터 평활
+- 데이터의 계절적 변동 문제 해결
+- 의도치 않은 사전관찰의 방지
+
+## 누락된 데이터 다루기
+- 대치법 : ???이터셋 전체의 관측에 기반하여 누락된 데이터를 채워 넣는 방법
+- 보간법 : 대치법의 한 형태로 인접한 데이터를 사용해 누락된 데이터를 추정하는 방법
+- 영향받은 기간 삭제 :  누락된 데이터의 기간을 완전히 사용하지 않는방법
+```{r}
+library(zoo)
+library(data.table)
+?``
+
+```{r}
+require(zoo)
+require(data.table)
+```
+
+```{r}
+unemp <- fread("https://raw.githubusercontent.com/PracticalTimeSeriesAnalysis/BookRepo/master/Ch02/data/UNRATE.csv")
+unemp
+```
+
+### data.table 살펴보기
+```{}
+dt[,new.col :=old.col+7]  # 기존에 존재하??? old.col열을 복사하지 않고도 new.col 열을 만들 수 있다. (메모리 절약)
+dt[,.(col1,col2,col3)]  # 부분집합  .() 연산자는 list()의 약칭
+dt[col1 < 3 & col2 > 5] # 논리 연산
+dt[col1 < 3 & col2 > 5, .(col1, col2, col3)] # 조합
+dt[, .N, col1]  # col1열에 속한 그???의 무리에서 각 그룹에 대한 행의 개수를 셀 수 있다.(group by 연산)
+dt[, .(total = .N, mean = mean(col2)), col1]  # col1에 속한 그룹 중 각 그룹의 총 행의 개수와 col2에 대한 평균을 반환
+```
+
+```{r}
+unemp[,DATE := as.Date(DATE)]
+setkey(unemp,DATE)
+
+# 임의로 누???된 데이터로 구성된 데이터셋 생성
+rand.unemp.idx <- sample(1:nrow(unemp), 0.1*nrow(unemp))  # 랜덤으로 인덱스 추출
+rand.unemp <- unemp[-rand.unemp.idx]
+```
+
+```{r}
+# 실업률이 높을 때 누락될 가능성이 더 높은 데이터로 구성된 데이터셋 생성
+high.unemp.idx <- wh?ch(unemp$UNRATE > 8)
+num.to.select <- 0.2*length(high.unemp.idx)
+
+high.unemp.idx <- sample(high.unemp.idx,)
+bias.unemp <- unemp[-high.unemp.idx]
+```
+
+```{r}
+# 롤링조인
+all.dates <- seq(from = unemp$DATE[1], to = tail(unemp$DATE,1),by = 'months')
+
+rand.unem? = rand.unemp[J(all.dates),roll=0]   # J는 data.table의 조인을 위해 사용됨
+bias.unemp = bias.unemp[J(all.dates),roll=0]
+rand.unemp[,rpt := is.na(UNRATE)]
+```
+롤링 조인을 사용하면 데이터셋의 시작 날짜와 종료 날짜 사이의 가용한 모든 날짜의 순서를 생성할 수 ???다. 
+그러면 데이터셋에 NA로 채워진 열을 얻게 된다. 이렇게 얻어진 결측치는 "포워드 필","이동평균","보간법" 등의 방법으로 채워넣을 수 있다.
+
+### 롤링 조인
+서로 다른 타임스탬프가 정확하게 맞물리지는 않을 때
+```{r}
+donations <- data.table(
+  amt = c(99,100,5,1?,11,1200),
+  dt = as.Date(c("2019-2-27","2019-3-2","2019-6-13","2019-8-1","2019-8-31","2019-9-15"))
+)
+publicity <- data.table(
+  identifier = c('q4q42','4299hj','bbg2'),
+  dt = as.Date(c('2019-1-1','2019-4-1','2019-7-1'))
+)
+
+setkey(publicity,'dt')
+setkey(d?nations,'dt')
+
+publicity[donations,roll=TRUE]
+```
+
+### 포워드 필
+누락된 값이 나타나기 직전 값으로 누락된 값을 채우는 가장 간단한 방법. zoo 패키지의 na.locf를 사용하면 된다.
+백워드 필이라는 것도 있으나 사전관찰이 될 수 있으므로 데이터를 사용하여 미래를 예측???지 않거나 
+특정 분야의 지식에 기반하여 데이터의 미래보다 과거를 채우는게 더 의미가 있는 경우만 사용해야 한다.
+```{r}
+rand.unemp[, impute.ff := na.locf(UNRATE, na.rm = FALSE)]
+bias.unemp[, impute.ff := na.locf(UNRATE, na.rm = FALSE)]
+```
+
+```{r}
+# 평평한 부???을 보여주는 그래프
+unemp[350:400,plot(DATE,UNRATE, col=1, lwd=2,type='b')]
+rand.unemp[350:400,lines(DATE, impute.ff ,col=2,lwd=2,lty=2)]
+rand.unemp[350:400][rpt == TRUE, points(DATE, impute.ff, col=2,pch=6, cex=2)]
+```
+### 이동평균(moving average)
+전체 평???에 관한 개별 데이터값을 의심할 만한 이유가 있다면 포워드 필보다는 이동평균을 사용해야 한다. 
+포워드 필은 누락된 값의 실제 값보다 임의의 노이즈를 포함하는데 평균을 통해 이런 노이즈의 일부를 제거할 수 있다.
+이동평균이 반드시 산술 평균일 필요는 없으며 지수가???이동평균, 기하평균 등을 사용할 수 있다.
+```{r}
+
+rand.unemp[, impute.rm.nolookahead := rollapply(c(NA, NA, UNRATE), 3,
+            # 사전관찰을 고려하지 않는다면 데이터의 전과 후를 모두 포함한 c(NA,UNRATE,NA)를 사용해 정보를 최대화해줄 수 있다.
+            ?unction(x) {
+              if (!is.na(x[3])) x[3] else mean(x, na.rm=TRUE)
+            })]
+bias.unemp[, impute.rm.nolookahead := rollapply(c(NA, NA, UNRATE), 3, 
+            function(x) {
+              if (!is.na(x[3])) x[3] else mean(x, na.rm=TRUE)
+      ?     })]
+```
+
+누락이 발생하기 이전 값들에 대한 평균으로 누락된 값들을 채워넣는다.(마지막 값을 색인하여 누락 여부의 검사)
+
+```{r}
+unemp[350:400,plot(DATE,UNRATE, col=1, lwd=2,type='b')]
+rand.unemp[350:400,lines(DATE, impute.ff ,col=2,lwd=2,lty=2)]
+rand.unem?[350:400][rpt == TRUE, points(DATE, impute.ff, col=2,pch=6, cex=2)]
+rand.unemp[350:400,lines(DATE,impute.rm.nolookahead,col=3,lwd=2,lty=2)]
+rand.unemp[350:400][rpt == TRUE, points(DATE, impute.rm.nolookahead, col=3,pch=6, cex=2)]
+```
+### 보간법
+전체 데이터??? 기하학적인 행동에 제한하여 누학된 데이터값을 결정하는 방법이다.
+선형 보간법은 누락된 데이터가 주변 데이터에 선형적인 일관성을 갖도록 제한한다.
+베이즈 관점에서 보면 대치에 선험성(prior)을 사용할 수 있다는 의미이다.
+이동평균과 마찬가지로 보간법은 과거와 미???의 데이터를 모두 활용하거나 둘 중 하나만 활용할 수 있는데
+사전관찰을 만들지 않거나 사전관찰이 생기더라고 문제가 되지 않는다는 확신과 이에 대한 근거가 뒷받침되어야 한다.
+```{r}
+# 선형 보간법
+rand.unemp[,impute.li := na.approx(UNRATE)]
+bias.unemp[,impute.li ?= na.approx(UNRATE)]
+
+# 다항식 보간법
+rand.unemp[,impute.sp := na.spline(UNRATE)]
+bias.unemp[,impute.sp := na.spline(UNRATE)]
+
+unemp[90:120, plot(DATE, UNRATE, col = 1, type='b')]
+rand.unemp[90:120, lines(DATE,impute.li, col=2, lwd=2,lty=2)]
+rand.unemp[90:?20, lines(DATE,impute.sp, col=3, lwd=2,lty=3)]
+legend("top",legend=c("original","선형","다항식"),fill=c(1,2,3))
+```
+### 대치
+- 포워드 필 : na.locf
+- 이동평균 : rollapply
+- 보간 : na.approx, na.spline
+
+## 업샘플링과 다운샘플링
+데이터 내의 타임스탬프의 빈도??? 바꿀 수 있다. 다운샘플링은 데이터의 빈도를 줄이는 것이다. 
+다음과 같은 경우 빈번하게 이뤄진다.
+- 원본 데이터의 시간 단위가 실용적이지 않은 경우
+  - 기온에 대한 매 초 측정 -> 매 n개의 요소를 추출하는 다운샘플링 실시
+- 계절 주기의 특정 부분에 집중
+- 더 낮은?빈도의 데이터에 맞추는 경우 : 일부 데이터를 삭제하기보다 데이터를 취합하거나 다운샘플링해야 한다.
+```{r}
+unemp[seq.int(from=1, to=nrow(unemp), by=12)]
+```
+
+```{r}
+unemp[, mean(UNRATE), by=format(DATE,"%Y")]
+```
+
+업샘플링은 실제로 측정하는 것은 아니지만 측???된 데이터에서 더 조밀한 시간의 데이터를 얻기 위한 것이다.
+더 많은 시간의 레이블이 추가되는 것은 맞지만, 더 많은 정보 자체가 추가되는 것은 아니다. 다음과 같은 상황에 업샘플링을 사용한다.
+- 시계열이 불규칙한 상황 : 롤링조인 사용가능
+- 입력이 서로 다른 빈도로?샘플링된 경우
+```{r}
+all.dates <-seq(from=unemp$DATE[1], to=tail(unemp$DATE,1),by="months")
+temp.table <- rand.unemp
+setkey(temp.table,'DATE')
+temp.table[J(all.dates), roll=0]
+```
+
+## 데이터 평활
+측정의 오류, 높게 튀는 측정치 등을 제거하기 위해 이동평균을 ???용해 볼 수 있다.
+
+### 지수평활
+누락된 데이터를 주변값의 평균으로 대치하는 이동평균과는 대조적으로, 
+지수평활은 좀 더 최근 데이터일수록 더 많은 가중치를 줘서 시간의 특성을 더 잘 인식할 수 있도록 만들어진 방법이다.
+
+시간 t에서 평활된 값 : $S_t = d*S_{t-1}+(1?d)*x_t$
+$S_{t-1} = d*S_{t-2} + (1-d)*x_{t-1}$
+$--> d(d*S_{t-2}+(1-d)*x_{t-1})+(1-d)*x_t$
+형태
+$d^3*x_{t-3}+d^2*x_{t-2}+d*x_{t-1}$
+```{python}
+import pandas as pd
+air = pd.read_csv("https://raw.githubusercontent.com/PracticalTimeSeriesAnalysis/BookRepo/mast?r/Ch02/data/AirPassengers.csv", names=['Date', 'Passengers'])
+
+air['Smooth.5'] = air.ewm(alpha = .5).Passengers.mean()
+air['Smooth.9'] = air.ewm(alpha = .9).Passengers.mean()
+print(air)
+```
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```?r}
+
+```
+
+```{r}
+
+```
+
+
